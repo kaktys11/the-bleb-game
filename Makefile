@@ -17,7 +17,7 @@ EXEC = game
 
 # Rule to build the executable
 $(EXEC): $(OBJ)
-	$(CXX) $(OBJ) -o ./build/$(EXEC) $(LDFLAGS)  # Add LDFLAGS during linking
+	$(CXX) $(OBJ) -o ./build/$(EXEC)
 
 # Rule to create object files from source files, preserving subdirectory structure
 $(OBJ_DIR)/model/%.o: src/%.cc
