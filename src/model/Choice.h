@@ -1,8 +1,6 @@
 #ifndef __SRC_MODEL_CHOICE_H__
 #define __SRC_MODEL_CHOICE_H__
 
-class Choice;
-
 class Choice {
  private:
   std::string header;
