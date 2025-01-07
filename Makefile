@@ -26,12 +26,11 @@ $(OBJ_DIR)/model/%.o: src/%.cc
 
 # Clean up generated files
 clean:
-	rm -rf $(OBJ_DIR) $(EXEC)
+	rm -rf $(OBJ_DIR) build/$(EXEC)
 
 
-run: $(EXEC)
+run: clean $(EXEC)
 	./build/$(EXEC)
-
 
 # Phony targets
 .PHONY: clean
