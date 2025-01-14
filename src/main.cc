@@ -32,11 +32,33 @@ class Manager {
   Character character;
 };
 
-
+struct Node {
+int value;
+Node* parent = nullptr;
+Node* child = nullptr;
+};
 
 int main() {
-  Choice test;
-  test.getHeader();
-  std::cout << test.getHeader() << std::endl;
+  // Choice test;
+  // test.getHeader();
+  // std::cout << test.getHeader() << std::endl;
 
+  Node* element_1 = new Node;
+  element_1->value = 3;
+  Node* element_2 = new Node;
+  element_2->value = 5;
+  Node* element_3 = new Node;
+  element_3->value = 7;
+  element_1->child = element_2;
+  element_2->child = element_3;
+  element_2->parent = element_1;
+  element_3->parent = element_2;
+
+
+
+  Node* pointer = element_1;
+  while (pointer != nullptr) {
+    std::cout << (*pointer).value<< std::endl;
+    pointer = (*pointer).child;
+  }
 }

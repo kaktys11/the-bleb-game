@@ -28,3 +28,4 @@ class Choice {
 };
 
 #endif  // __SRC_MODEL_CHOICE_H__
+
