@@ -38,11 +38,36 @@ Node* parent = nullptr;
 Node* child = nullptr;
 };
 
+class DialogTree {
+Node* root = nullptr;
+Node* pointer = nullptr;
+public:
+  void add_element(int newEl) {//to do type
+    if (root == nullptr) {
+      pointer = new Node;
+      root = pointer;
+      pointer->value = newEl;
+    }
+    pointer->child = new Node;
+    pointer->child->value = newEl;
+  };
+  void print_tree() {
+Node* print_pointer = root;  // = ????
+  while (print_pointer != nullptr) {
+    std::cout << print_pointer->value<< std::endl;
+    print_pointer = print_pointer->child;
+  }
+  };
+
+};
+
 int main() {
   // Choice test;
   // test.getHeader();
   // std::cout << test.getHeader() << std::endl;
-
+  DialogTree three;
+  three.add_element(3);
+  three.print_tree();
   Node* element_1 = new Node;
   element_1->value = 3;
   Node* element_2 = new Node;
@@ -61,4 +86,7 @@ int main() {
     std::cout << (*pointer).value<< std::endl;
     pointer = (*pointer).child;
   }
+  delete element_1;
+  delete element_2;
+  delete element_3;
 }

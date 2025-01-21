@@ -32,5 +32,8 @@ clean:
 run: clean $(EXEC)
 	./build/$(EXEC)
 
+leaks: clean $(EXEC)
+	valgrind --leak-check=full --track-origins=yes ./build/${EXEC}
+
 # Phony targets
 .PHONY: clean
