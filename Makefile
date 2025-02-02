@@ -33,5 +33,12 @@ run: clean $(PROJECT_NAME)
 leaks: clean $(PROJECT_NAME)
 	valgrind --leak-check=full --track-origins=yes $(EXEC_FILE)
 
+clang-format:
+	@echo "Fixing style with clang-format..."
+	@find $(SRC_DIRS) -name "*.cc" -o -name "*.h" | while read file; do \
+		clang-format -i $$file; \
+	done
+	@echo "clang-format completed."
+
 # Phony targets
 .PHONY: clean
