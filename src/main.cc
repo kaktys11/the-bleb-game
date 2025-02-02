@@ -91,7 +91,7 @@ int main() {
   // test.getHeader();
   // std::cout << test.getHeader() << std::endl;
   DialogTree three;
-  three.getPointerValue();
+  // three.getPointerValue();
   three.add_element(3);
   three.print_tree();
   // Node* element_1 = new Node;
