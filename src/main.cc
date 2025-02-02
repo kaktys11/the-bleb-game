@@ -87,13 +87,13 @@ public:
 };
 
 int main() {
-  // Choice test;
-  // test.getHeader();
-  // std::cout << test.getHeader() << std::endl;
-  DialogTree three;
-  // three.getPointerValue();
-  three.add_element(3);
-  three.print_tree();
+  Choice test;
+  test.getHeader();
+  std::cout << test.getHeader() << std::endl;
+  // DialogTree three;
+  // // three.getPointerValue();
+  // three.add_element(3);
+  // three.print_tree();
   // Node* element_1 = new Node;
   // element_1->value = 3;
   // Node* element_2 = new Node;
