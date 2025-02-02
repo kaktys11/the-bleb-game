@@ -1,39 +1,44 @@
+PROJECT_NAME = bleb_game
+
 # Compiler and flags
 CXX = g++
 CXXFLAGS = -std=c++11 -Wall -Wextra
 LDFLAGS = -lraylib -lm -lpthread -ldl -lX11
 
-# Directory for object files
-OBJ_DIR = build/obj
+# Files and directories
+BUILD_DIR = build
+EXEC_FILE = $(BUILD_DIR)/$(PROJECT_NAME)
 
-# List of source files
-SRC = $(wildcard src/*.cc)
+SRC_DIRS = src src/model
+SRC = $(foreach dir,$(SRC_DIRS),$(wildcard $(dir)/*.cc))
 
-# List of object files (keeping the directory structure)
-OBJ = $(SRC:src/%.cc=$(OBJ_DIR)/model/%.o)
+OBJ_DIR = $(BUILD_DIR)/obj
+OBJ = $(SRC:$(SRC_DIRS)/%.cc=$(OBJ_DIR)/%/%.o)
 
-# Output executable file
-EXEC = game
 
-# Rule to build the executable
-$(EXEC): $(OBJ)
-	$(CXX) $(OBJ) -o ./build/$(EXEC)
+# Main targets
+$(PROJECT_NAME): $(OBJ)
+	$(CXX) $(CXXFLAGS) -o $(EXEC_FILE) $^
 
-# Rule to create object files from source files, preserving subdirectory structure
-$(OBJ_DIR)/model/%.o: src/%.cc
-	@mkdir -p $(dir $@)  # Create the necessary directories for object files
+$(OBJ_DIR)/%/%.o: $(SRC_DIRS)/%/%.cc
+	@mkdir -p $(dir $@)
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
-# Clean up generated files
 clean:
-	rm -rf $(OBJ_DIR) build/$(EXEC)
+	rm -rf $(OBJ_DIR) $(EXEC_FILE)
 
+run: clean $(PROJECT_NAME)
+	$(EXEC_FILE)
 
-run: clean $(EXEC)
-	./build/$(EXEC)
+leaks: clean $(PROJECT_NAME)
+	valgrind --leak-check=full --track-origins=yes $(EXEC_FILE)
 
-leaks: clean $(EXEC)
-	valgrind --leak-check=full --track-origins=yes ./build/${EXEC}
+clang-format:
+	@echo "Fixing style with clang-format..."
+	@find $(SRC_DIRS) -name "*.cc" -o -name "*.h" | while read file; do \
+		clang-format -i $$file; \
+	done
+	@echo "clang-format completed."
 
 # Phony targets
 .PHONY: clean
