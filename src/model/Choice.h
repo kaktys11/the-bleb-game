@@ -1,8 +1,8 @@
 #ifndef __SRC_MODEL_CHOICE_H__
 #define __SRC_MODEL_CHOICE_H__
 
-#include <string>
 #include <iostream>
+#include <string>
 
 class Choice {
 private:

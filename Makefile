@@ -35,7 +35,7 @@ leaks: clean $(PROJECT_NAME)
 
 clang-format:
 	@echo "Fixing style with clang-format..."
-	@find $(SRC_DIRS) -name "*.cc" -o -name "*.h" | while read file; do \
+	@find . -name "*.cc" -o -name "*.h" | while read file; do \
 		clang-format -i $$file; \
 	done
 	@echo "clang-format completed."

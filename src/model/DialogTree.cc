@@ -31,9 +31,7 @@ void DialogTree::pointerToParent() {
   }
 }
 
-void DialogTree::pointerToRoot() {
-  pointer = root;
-}
+void DialogTree::pointerToRoot() { pointer = root; }
 
 void DialogTree::addChild(Choice newEl) { // to do multichild
   if (root == nullptr) {
