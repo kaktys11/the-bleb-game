@@ -15,6 +15,7 @@ private:
   Node *pointer = nullptr;
 
 public:
+  // ~DialogTree();  // to do
   Choice getPointerValue();
   bool isPointerNull();
   void pointerToChild();
