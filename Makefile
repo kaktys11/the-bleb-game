@@ -18,11 +18,11 @@ OBJ = $(SRC:$(SRC_DIRS)/%.cc=$(OBJ_DIR)/%/%.o)
 
 # Main targets
 $(PROJECT_NAME): $(OBJ)
-	$(CXX) $(CXXFLAGS) -o $(EXEC_FILE) $^
+	$(CXX) $(CXXFLAGS) -o $(EXEC_FILE) $^ $(LDFLAGS)
 
 $(OBJ_DIR)/%/%.o: $(SRC_DIRS)/%/%.cc
 	@mkdir -p $(dir $@)
-	$(CXX) $(CXXFLAGS) -c $< -o $@
+	$(CXX) $(CXXFLAGS) -c $< -o $@ $(LDFLAGS)
 
 clean:
 	rm -rf $(OBJ_DIR) $(EXEC_FILE)
@@ -35,7 +35,7 @@ leaks: clean $(PROJECT_NAME)
 
 clang-format:
 	@echo "Fixing style with clang-format..."
-	@find $(SRC_DIRS) -name "*.cc" -o -name "*.h" | while read file; do \
+	@find . -name "*.cc" -o -name "*.h" | while read file; do \
 		clang-format -i $$file; \
 	done
 	@echo "clang-format completed."
