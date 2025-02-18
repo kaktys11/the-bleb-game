@@ -34,11 +34,39 @@ private:
   Character character;
 };
 
+bool isColourEqual(Color colour,Color colour2) {
+  if (colour.b==colour2.b && colour.r==colour2.r && colour.g==colour2.g && colour.a==colour2.a) {
+    return true;
+  } else {
+    return false;
+  }
+};
+
+class Button {
+  public:
+  void draw() {\
+  BeginDrawing();
+  DrawRectangleRec(buttonRect,BLUE);
+  EndDrawing();
+}
+  void update() {
+    if(IsMouseButtonPressed(MOUSE_LEFT_BUTTON) && 
+    CheckCollisionPointRec(GetMousePosition(),buttonRect))
+    {
+      buttonColour.r+=10;
+    }
+  }
+  private:
+  Rectangle buttonRect = {1,9,400,100};
+  Color buttonColour = {1,4,8,255};
+};
+
 int main() {
   Choice test("в замке","you go to the castle and see a cow what do you do","go to the castle");
   InitWindow(800,600,"OKNO");
   Font font = LoadFont("src/assets/advanced_pixel-7.ttf");
   Color colour = PINK;
+  Button button;
   while(WindowShouldClose() == false) {
     BeginDrawing();
     ClearBackground(colour);
@@ -47,8 +75,10 @@ int main() {
     //DrawText(test.getDescription().c_str(),40,100,15,BLACK);
     //DrawTextEx(font,test.getDescription(), Vector2 position, float fontSize, float spacing, Color tint)
     EndDrawing();
+    button.draw();
+    button.update();
     if (IsKeyPressed(KEY_UP)) {
-      if (colour == VIOLET) {
+      if (isColourEqual(colour,VIOLET) == true) {
         colour = PINK;
       } else {
         colour = VIOLET;
