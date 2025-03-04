@@ -6,7 +6,7 @@ CXXFLAGS = -std=c++11 -Wall -Wextra
 LDFLAGS = -lraylib -lm -lpthread -ldl -lX11
 
 # Files and directories
-BUILD_DIR = build
+BUILD_DIR = ./build
 EXEC_FILE = $(BUILD_DIR)/$(PROJECT_NAME)
 
 SRC_DIRS = src src/model
@@ -32,7 +32,7 @@ clean:
 
 build:
 	mkdir -p ${BUILD_DIR}
-	cmake -S src -B ${BUILD_DIR}
+	cmake -S ./src -B ${BUILD_DIR}
 	cmake --build ${BUILD_DIR}
 
 run: clean build
@@ -49,4 +49,4 @@ clang-format:
 	@echo "clang-format completed."
 
 # Phony targets
-.PHONY: clean
+.PHONY: clean build

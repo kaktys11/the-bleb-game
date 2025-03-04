@@ -1,7 +1,7 @@
 #include "model/Choice.h"
 #include "model/DialogTree.h"
 #include <iostream>
-#include "raylib.h"
+// #include "raylib.h"
 
 class Character {
 private:
@@ -46,10 +46,10 @@ class Button {
   public:
   Button() {}
   Button(Rectanle rect) {
-    
+
   }
   bool isButtonPressed() {
-    if(IsMouseButtonPressed(MOUSE_LEFT_BUTTON) && 
+    if(IsMouseButtonPressed(MOUSE_LEFT_BUTTON) &&
     CheckCollisionPointRec(GetMousePosition(),buttonRect))
     {
       return true;
@@ -62,7 +62,7 @@ class Button {
   DrawRectangleRec(buttonRect,buttonColour);
 }
   void update() {
-    if(IsMouseButtonPressed(MOUSE_LEFT_BUTTON) && 
+    if(IsMouseButtonPressed(MOUSE_LEFT_BUTTON) &&
     CheckCollisionPointRec(GetMousePosition(),buttonRect))
     {
       buttonColour.r+=10;
