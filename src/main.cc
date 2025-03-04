@@ -44,10 +44,22 @@ bool isColourEqual(Color colour,Color colour2) {
 
 class Button {
   public:
+  Button() {}
+  Button(Rectanle rect) {
+    
+  }
+  bool isButtonPressed() {
+    if(IsMouseButtonPressed(MOUSE_LEFT_BUTTON) && 
+    CheckCollisionPointRec(GetMousePosition(),buttonRect))
+    {
+      return true;
+    }else {
+      return false;0.
+
+    }
+  }
   void draw() {\
-  BeginDrawing();
-  DrawRectangleRec(buttonRect,BLUE);
-  EndDrawing();
+  DrawRectangleRec(buttonRect,buttonColour);
 }
   void update() {
     if(IsMouseButtonPressed(MOUSE_LEFT_BUTTON) && 
@@ -60,6 +72,11 @@ class Button {
   Rectangle buttonRect = {1,9,400,100};
   Color buttonColour = {1,4,8,255};
 };
+
+class DialogButton {
+private:
+int buttonNumber = 3;
+}
 
 int main() {
   Choice test("в замке","you go to the castle and see a cow what do you do","go to the castle");
@@ -74,8 +91,8 @@ int main() {
     DrawTextEx(font,test.getHeader().c_str(), {40,70},60,7,BLACK);
     //DrawText(test.getDescription().c_str(),40,100,15,BLACK);
     //DrawTextEx(font,test.getDescription(), Vector2 position, float fontSize, float spacing, Color tint)
-    EndDrawing();
     button.draw();
+    EndDrawing();
     button.update();
     if (IsKeyPressed(KEY_UP)) {
       if (isColourEqual(colour,VIOLET) == true) {

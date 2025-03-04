@@ -1,4 +1,4 @@
-PROJECT_NAME = bleb_game
+PROJECT_NAME =THE_BLEB_GAME
 
 # Compiler and flags
 CXX = g++
@@ -17,18 +17,26 @@ OBJ = $(SRC:$(SRC_DIRS)/%.cc=$(OBJ_DIR)/%/%.o)
 
 
 # Main targets
-$(PROJECT_NAME): $(OBJ)
-	$(CXX) $(CXXFLAGS) -o $(EXEC_FILE) $^ $(LDFLAGS)
+# $(PROJECT_NAME): $(OBJ)
+# 	$(CXX) $(CXXFLAGS) -o $(EXEC_FILE) $^ $(LDFLAGS)
 
-$(OBJ_DIR)/%/%.o: $(SRC_DIRS)/%/%.cc
-	@mkdir -p $(dir $@)
-	$(CXX) $(CXXFLAGS) -c $< -o $@ $(LDFLAGS)
+# $(OBJ_DIR)/%/%.o: $(SRC_DIRS)/%/%.cc
+# @mkdir -p $(dir $@)
+# $(CXX) $(CXXFLAGS) -c $< -o $@ $(LDFLAGS)
 
 clean:
 	rm -rf $(OBJ_DIR) $(EXEC_FILE)
 
-run: clean $(PROJECT_NAME)
-	$(EXEC_FILE)
+# run: clean $(PROJECT_NAME)
+# 	$(EXEC_FILE)
+
+build:
+	mkdir -p ${BUILD_DIR}
+	cmake -S src -B ${BUILD_DIR}
+	cmake --build ${BUILD_DIR}
+
+run: clean build
+	./$(EXEC_FILE)
 
 leaks: clean $(PROJECT_NAME)
 	valgrind --leak-check=full --track-origins=yes $(EXEC_FILE)
