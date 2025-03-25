@@ -3,6 +3,12 @@
 #include <iostream>
 #include <QMainWindow>
 #include <QApplication>
+#include <QVBoxLayout>
+#include <QPushButton>
+#include <QWidget>
+#include <QLabel>
+#include <QFrame>
+
 // #include "raylib.h"
 
 // class Character {
@@ -84,9 +90,42 @@ class GameMainWindow : public QMainWindow {
   public:
     GameMainWindow(QWidget *parent = nullptr) : QMainWindow(parent) {
       setWindowTitle("Bleb Game");
-      setGeometry(100, 100, 300, 200);
+      int screenWidth = 1920;
+      int screenHeight = 1080;
+      int windowWidth = 1400;
+      int windowHeight = 500;
+      setGeometry((screenWidth - windowWidth) / 2, (screenHeight - windowHeight) / 2, windowWidth, windowHeight);
+
+      QWidget* centralWidget = new QWidget();
+      setCentralWidget(centralWidget);
+      QVBoxLayout* layout = new QVBoxLayout(centralWidget);
+
+      // QPushButton* button = new QPushButton("Knopka");
+      // layout->addWidget(button);
+
+      QLabel* labelName = new QLabel("название");
+      labelName->setFrameStyle(QFrame::Panel | QFrame::Sunken);
+      layout->addWidget(labelName);
+
+      QLabel* labelPicture = new QLabel("картинка");
+      labelPicture->setFrameStyle(QFrame::Panel | QFrame::Sunken);
+      layout->addWidget(labelPicture);
+
+      QLabel* labelDesc = new QLabel("название");
+      labelDesc->setFrameStyle(QFrame::Panel | QFrame::Sunken);
+      layout->addWidget(labelDesc);
+
+      QWidget* widgetsDialog = new QWidget();
+      layout->addWidget(widgetsDialog);
+      QVBoxLayout* layoutDialog = new QVBoxLayout(widgetsDialog);
+      QPushButton* buttonA = new QPushButton("option-a");
+      layoutDialog->addWidget(buttonA);
+      QPushButton* buttonB = new QPushButton("option-b");
+      layoutDialog->addWidget(buttonB);
+      QPushButton* buttonC = new QPushButton("option-c");
+      layoutDialog->addWidget(buttonC);
     }
-}
+};
 
 int main(int argc, char *argv[]) {
   QApplication app(argc, argv);
