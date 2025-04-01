@@ -1,6 +1,7 @@
 #include "model/Choice.h"
 #include "model/DialogTree.h"
 #include <iostream>
+#include <vector>
 #include <QMainWindow>
 #include <QApplication>
 #include <QVBoxLayout>
@@ -86,6 +87,23 @@
 // int buttonNumber = 3;
 // }
 
+class DialogOptions : public QWidget {
+  public:
+  DialogOptions(QWidget *parent = nullptr) : QWidget(parent) {
+    QVBoxLayout* layoutDialog = new QVBoxLayout(this);
+  };
+
+  void setButtons() { // std::vector<std::string> options
+    QPushButton* buttonA = new QPushButton("option-a");
+    layout()->addWidget(buttonA);
+    QPushButton* buttonB = new QPushButton("option-b");
+    layout()->addWidget(buttonB);
+    QPushButton* buttonC = new QPushButton("option-c");
+    layout()->addWidget(buttonC);
+  }
+};
+
+
 class GameMainWindow : public QMainWindow {
   public:
     GameMainWindow(QWidget *parent = nullptr) : QMainWindow(parent) {
@@ -115,24 +133,18 @@ class GameMainWindow : public QMainWindow {
       labelDesc->setFrameStyle(QFrame::Panel | QFrame::Sunken);
       layout->addWidget(labelDesc);
 
-      QWidget* widgetsDialog = new QWidget();
-      layout->addWidget(widgetsDialog);
-      QVBoxLayout* layoutDialog = new QVBoxLayout(widgetsDialog);
-      QPushButton* buttonA = new QPushButton("option-a");
-      layoutDialog->addWidget(buttonA);
-      QPushButton* buttonB = new QPushButton("option-b");
-      layoutDialog->addWidget(buttonB);
-      QPushButton* buttonC = new QPushButton("option-c");
-      layoutDialog->addWidget(buttonC);
-    }
+      DialogOptions* optionWidget = new DialogOptions();
+      layout->addWidget(optionWidget);
+      optionWidget->setButtons();
+    };
 };
 
-int main(int argc, char *argv[]) {
+int main(int argc, char** argv) {
   QApplication app(argc, argv);
   GameMainWindow window;
   window.show();
   return app.exec();
-}
+};
 
 // int main() {
 //   Choice test("в замке","you go to the castle and see a cow what do you do","go to the castle");
