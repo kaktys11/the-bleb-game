@@ -15,27 +15,23 @@ bool DialogTree::isPointerNull() {
   };
 }
 
-void DialogTree::pointerToChild(unsigned index) {
+void DialogTree::pointerToChild() {
   if (pointer == nullptr) {
     throw std::runtime_error("pointer is nullpointer");
   }
-  if (index < 0 || index >= pointer->children.size()) { // additional
-    throw std::runtime_error("children scene index out of range");
-  }
-  pointer = pointer->children[index];
+  pointer = pointer->child;
 }
 
 void DialogTree::pointerToParent() {
   if (pointer == nullptr) {
     throw std::runtime_error("pointer is nullpointer");
-  } else {
-    pointer = pointer->parent;
   }
+  pointer = pointer->parent;
 }
 
 void DialogTree::pointerToRoot() { pointer = root; }
 
-void DialogTree::addChild(Choice newEl) { // to do multichildren
+void DialogTree::addChild(Choice newEl) { // to do multichild
   if (root == nullptr) {
     pointer = new Node;
     root = pointer;
@@ -44,9 +40,14 @@ void DialogTree::addChild(Choice newEl) { // to do multichildren
     if (pointer == nullptr) {
       throw std::runtime_error("pointer is nullpointer");
     }
-    pointer->children.push_back(new Node(newEl, pointer));
+    if (pointer->child != nullptr) {
+      throw std::runtime_error("this node already has a child");
+    }
+    pointer->child = new Node;
+    pointer->child->value = newEl;
   }
 }
+
 
 void DialogTree::printTree() {
   printTreeRecursive(root, 0);

@@ -10,15 +10,8 @@ private:
   struct Node {
     Choice value;
     Node *parent = nullptr;
-    std::vector<Node*> children;
+    Node *child = nullptr;
     Node() = default;
-    Node(Choice val) {
-      value = val;
-    }
-    Node(Choice val, Node* parentPtr) {
-      value = val;
-      parent = parentPtr;
-    }
   };
   Node *root = nullptr;
   Node *pointer = nullptr;
@@ -27,12 +20,11 @@ public:
   // ~DialogTree();  // to do
   Choice getPointerValue();
   bool isPointerNull();
-  void pointerToChild(unsigned index);
+  void pointerToChild();
   void pointerToParent();
   void pointerToRoot();
   void addChild(Choice newEl);
   void printTree();
-  std::vector<std::string> getChildrenChoiceDesc();
 private:
   void printTreeRecursive(Node* node, int depth);
 };
