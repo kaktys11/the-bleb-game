@@ -9,23 +9,57 @@ LDFLAGS = -lraylib -lm -lpthread -ldl -lX11
 BUILD_DIR = ./build
 EXEC_FILE = $(BUILD_DIR)/$(PROJECT_NAME)
 
-SRC_DIRS = src src/model
-SRC = $(foreach dir,$(SRC_DIRS),$(wildcard $(dir)/*.cc))
+# BUILD_DIR_TEST = ./build
+# EXEC_FILE_TEST = $(BUILD_DIR_TEST)/$(PROJECT_NAME)
 
-OBJ_DIR = $(BUILD_DIR)/obj
-OBJ = $(SRC:$(SRC_DIRS)/%.cc=$(OBJ_DIR)/%/%.o)
+# SRC_DIRS = src/model
+# SRC = $(foreach dir,$(SRC_DIRS),$(wildcard $(dir)/*.cc)) test_DialogTree.cc
 
+# OBJ_DIR = $(BUILD_DIR_TEST)/obj
+# OBJ = $(SRC:$(SRC_DIRS)/%.cc=$(OBJ_DIR)/%/%.o)
 
-# Main targets
-# $(PROJECT_NAME): $(OBJ)
-# 	$(CXX) $(CXXFLAGS) -o $(EXEC_FILE) $^ $(LDFLAGS)
+# dialog: $(OBJ)
+# 	$(CXX) $(CXXFLAGS) -o $(EXEC_FILE_TEST) $^ $(LDFLAGS)
 
 # $(OBJ_DIR)/%/%.o: $(SRC_DIRS)/%/%.cc
-# @mkdir -p $(dir $@)
-# $(CXX) $(CXXFLAGS) -c $< -o $@ $(LDFLAGS)
+# 	@mkdir -p $(dir $@)
+# 	$(CXX) $(CXXFLAGS) -c $< -o $@
+
+
+BUILD_DIR_TEST = ./build
+EXEC_FILE_TEST = $(BUILD_DIR_TEST)/$(PROJECT_NAME)_DIALOGTREE
+
+SRC_DIRS = src/model
+SRC = $(foreach dir,$(SRC_DIRS),$(wildcard $(dir)/*.cc)) src/test_DialogTree.cc
+
+OBJ_DIR = $(BUILD_DIR_TEST)/obj
+
+# Create a flat list of object files in OBJ_DIR
+OBJ = $(addprefix $(OBJ_DIR)/, $(notdir $(SRC:.cc=.o)))
+
+# vpath helps make find the source files
+vpath %.cc $(SRC_DIRS) .
+
+# Rule to compile .cc files to .o
+$(OBJ_DIR)/%.o: %.cc
+	@mkdir -p $(OBJ_DIR)
+	$(CXX) $(CXXFLAGS) -c $< -o $@
+
+$(OBJ_DIR)/test_DialogTree.o:
+	$(CXX) $(CXXFLAGS) -c src/test_DialogTree.cc -o $@
+
+# Link objects into final executable
+build_dialog: $(OBJ)
+	$(CXX) $(CXXFLAGS) -o $(EXEC_FILE_TEST) $^
+
+
+dialog:
+	make clean
+	make build_dialog
+	./$(EXEC_FILE_TEST)
 
 clean:
-	rm -rf $(OBJ_DIR) $(EXEC_FILE)
+	rm -rf $(BUILD_DIR)
 
 # run: clean $(PROJECT_NAME)
 # 	$(EXEC_FILE)
@@ -49,4 +83,4 @@ clang-format:
 	@echo "clang-format completed."
 
 # Phony targets
-.PHONY: clean build
+.PHONY: clean build dialog
