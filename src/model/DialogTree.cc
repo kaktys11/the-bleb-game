@@ -47,7 +47,6 @@ void DialogTree::addChild(Choice newEl) { // to do multichildren
   }
 }
 
-
 void DialogTree::printTree() {
   printTreeRecursive(root, 0);
 }
