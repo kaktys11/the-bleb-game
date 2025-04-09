@@ -59,17 +59,6 @@ void DialogTree::printTreeRecursive(Node* node, int depth) {
   for (const auto& children : node->children) {
     printTreeRecursive(children, depth + 1);
   }
-  // printTreeRecursive(root, 0);
-}
-
-void DialogTree::printTreeRecursive(Node* node, int depth) {
-  if (!node) return;
-
-  std::cout << std::string(depth * 2, ' ') << "- " << node->value.getHeader() << std::endl;
-
-  for (const auto& children : node->children) {
-    printTreeRecursive(children, depth + 1);
-  }
 }
 
 std::vector<std::string> DialogTree::getChildrenChoiceDesc() {
