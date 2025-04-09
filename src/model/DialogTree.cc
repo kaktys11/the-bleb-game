@@ -28,9 +28,8 @@ void DialogTree::pointerToChild(unsigned index) {
 void DialogTree::pointerToParent() {
   if (pointer == nullptr) {
     throw std::runtime_error("pointer is nullpointer");
-  } else {
-    pointer = pointer->parent;
   }
+  pointer = pointer->parent;
 }
 
 void DialogTree::pointerToRoot() { pointer = root; }
@@ -48,8 +47,20 @@ void DialogTree::addChild(Choice newEl) { // to do multichildren
   }
 }
 
+
 void DialogTree::printTree() {
   printTreeRecursive(root, 0);
+}
+
+void DialogTree::printTreeRecursive(Node* node, int depth) {
+  if (!node) return;
+
+  std::cout << std::string(depth * 2, ' ') << "- " << node->value.getHeader() << std::endl;
+
+  for (const auto& children : node->children) {
+    printTreeRecursive(children, depth + 1);
+  }
+  // printTreeRecursive(root, 0);
 }
 
 void DialogTree::printTreeRecursive(Node* node, int depth) {
