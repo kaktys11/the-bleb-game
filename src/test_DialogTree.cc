@@ -11,9 +11,12 @@ int main() {
     tree.addChild(Choice("scene 4", "", "scene 4 preview"));
     tree.pointerToChild(1);
     tree.addChild(Choice("scene 2.1", "", "scene 2.1 preview"));
+    tree.pointerToParent();
+    tree.pointerToChild(2);
+    tree.addChild(Choice("scene 3.1", "", "scene 3.1 preview"));
+    tree.addChild(Choice("scene 3.2", "", "scene 3.2 preview"));
     tree.printTree();
     tree.pointerToRoot();
-
 
     std::vector<std::string> choices = tree.getChildrenChoiceDesc();
     for (std::string scene : choices) {

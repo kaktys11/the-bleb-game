@@ -44,7 +44,7 @@ void DialogTree::addChild(Choice newEl) { // to do multichildren
     if (pointer == nullptr) {
       throw std::runtime_error("pointer is nullpointer");
     }
-    pointer->children.push_back(new Node(newEl));
+    pointer->children.push_back(new Node(newEl, pointer));
   }
 }
 

@@ -12,7 +12,13 @@ private:
     Node *parent = nullptr;
     std::vector<Node*> children;
     Node() = default;
-    Node(const Choice& val) : value(val) {}
+    Node(Choice val) {
+      value = val;
+    }
+    Node(Choice val, Node* parentPtr) {
+      value = val;
+      parent = parentPtr;
+    }
   };
   Node *root = nullptr;
   Node *pointer = nullptr;
