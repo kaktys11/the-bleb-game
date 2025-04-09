@@ -48,7 +48,6 @@ void DialogTree::addChild(Choice newEl) { // to do multichild
   }
 }
 
-
 void DialogTree::printTree() {
   Node *print_pointer = root; // = ????
   while (print_pointer != nullptr) {
@@ -68,13 +67,3 @@ void DialogTree::printTreeRecursive(Node* node, int depth) {
   }
 }
 
-std::vector<std::string> DialogTree::getChildrenChoiceDesc() {
-  if (pointer == nullptr) {
-    throw std::runtime_error("pointer is nullpointer");
-  }
-  std::vector<std::string> result;
-  for (unsigned i = 0; i < pointer->children.size(); ++i) {
-    result.push_back(pointer->children[i]->value.getChoiceDesc());
-  }
-  return result;
-}
