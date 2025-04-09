@@ -3,13 +3,16 @@
 
 #include "Choice.h"
 #include <iostream>
+#include <vector>
 
 class DialogTree {
 private:
   struct Node {
     Choice value;
     Node *parent = nullptr;
-    Node *child = nullptr;
+    std::vector<Node*> children;
+    Node() = default;
+    Node(const Choice& val) : value(val) {}
   };
   Node *root = nullptr;
   Node *pointer = nullptr;
@@ -18,11 +21,14 @@ public:
   // ~DialogTree();  // to do
   Choice getPointerValue();
   bool isPointerNull();
-  void pointerToChild();
+  void pointerToChild(unsigned index);
   void pointerToParent();
   void pointerToRoot();
   void addChild(Choice newEl);
   void printTree();
+  std::vector<std::string> getChildrenChoiceDesc();
+private:
+  void printTreeRecursive(Node* node, int depth);
 };
 
 #endif // __SRC_MODEL_DIALOGTREE_H__
