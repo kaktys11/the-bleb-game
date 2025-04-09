@@ -72,3 +72,13 @@ void DialogTree::printTreeRecursive(Node* node, int depth) {
   }
 }
 
+std::vector<std::string> DialogTree::getChildrenChoiceDesc() {
+  if (pointer == nullptr) {
+    throw std::runtime_error("pointer is nullpointer");
+  }
+  std::vector<std::string> result;
+  for (unsigned i = 0; i < pointer->children.size(); ++i) {
+    result.push_back(pointer->children[i]->value.getChoiceDesc());
+  }
+  return result;
+}
