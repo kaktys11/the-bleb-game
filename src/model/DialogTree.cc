@@ -50,7 +50,12 @@ void DialogTree::addChild(Choice newEl) { // to do multichild
 
 
 void DialogTree::printTree() {
-  printTreeRecursive(root, 0);
+  Node *print_pointer = root; // = ????
+  while (print_pointer != nullptr) {
+    std::cout << print_pointer->value << std::endl;
+    print_pointer = print_pointer->child;
+  }
+  // printTreeRecursive(root, 0);
 }
 
 void DialogTree::printTreeRecursive(Node* node, int depth) {
