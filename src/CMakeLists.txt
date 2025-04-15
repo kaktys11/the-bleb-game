@@ -6,14 +6,14 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 
-set(CMAKE_PREFIX_PATH /mnt/c/libraries/Qt/6.8.2/gcc_64)
-set(Qt6_DIR /mnt/c/libraries/Qt/6.8.2/gcc_64/lib/cmake/Qt6)
+# set(CMAKE_PREFIX_PATH /mnt/c/libraries/Qt/6.8.0/gcc_64)
+# set(Qt6_DIR /mnt/c/libraries/Qt/6.8.0/gcc_64/lib/cmake/Qt6)
 
-set(CMAKE_PREFIX_PATH /mnt/c/libraries/Qt/6.8.2/gcc_64)
-set(Qt6_DIR /mnt/c/libraries/Qt/6.8.2/gcc_64/lib/cmake/Qt6)
+# set(CMAKE_PREFIX_PATH /mnt/c/libraries/Qt/6.8.2/gcc_64)
+# set(Qt6_DIR /mnt/c/libraries/Qt/6.8.2/gcc_64/lib/cmake/Qt6)
 
-# set(CMAKE_PREFIX_PATH /usr/local/lib/qt/6.8.0/gcc_64)
-# set(Qt6_DIR /usr/local/lib/qt/6.8.0/gcc_64/lib/cmake/Qt6)
+set(CMAKE_PREFIX_PATH /usr/local/lib/qt/6.8.0/gcc_64)
+set(Qt6_DIR /usr/local/lib/qt/6.8.0/gcc_64/lib/cmake/Qt6)
 
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
@@ -34,4 +34,3 @@ find_package(Qt6 COMPONENTS ${QT_MODULES} REQUIRED)
 add_executable(${PROJECT_NAME} ${SOURCES})
 
 target_link_libraries(${PROJECT_NAME} PUBLIC ${QT_PREFIXED_MODULES})
-

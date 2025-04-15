@@ -3,6 +3,7 @@
 
 #include "Choice.h"
 #include <iostream>
+#include <vector>
 
 class DialogTree {
 private:
@@ -10,6 +11,7 @@ private:
     Choice value;
     Node *parent = nullptr;
     Node *child = nullptr;
+    Node() = default;
   };
   Node *root = nullptr;
   Node *pointer = nullptr;
@@ -23,6 +25,8 @@ public:
   void pointerToRoot();
   void addChild(Choice newEl);
   void printTree();
+private:
+  void printTreeRecursive(Node* node, int depth);
 };
 
 #endif // __SRC_MODEL_DIALOGTREE_H__

@@ -1,8 +1,15 @@
 #include "model/Choice.h"
 #include "model/DialogTree.h"
 #include <iostream>
+#include <vector>
 #include <QMainWindow>
 #include <QApplication>
+#include <QVBoxLayout>
+#include <QPushButton>
+#include <QWidget>
+#include <QLabel>
+#include <QFrame>
+
 // #include "raylib.h"
 
 // class Character {
@@ -80,20 +87,64 @@
 // int buttonNumber = 3;
 // }
 
+class DialogOptions : public QWidget {
+  public:
+  DialogOptions(QWidget *parent = nullptr) : QWidget(parent) {
+    QVBoxLayout* layoutDialog = new QVBoxLayout(this);
+  };
+
+  void setButtons() { // std::vector<std::string> options
+    QPushButton* buttonA = new QPushButton("option-a");
+    layout()->addWidget(buttonA);
+    QPushButton* buttonB = new QPushButton("option-b");
+    layout()->addWidget(buttonB);
+    QPushButton* buttonC = new QPushButton("option-c");
+    layout()->addWidget(buttonC);
+  }
+};
+
+
 class GameMainWindow : public QMainWindow {
   public:
     GameMainWindow(QWidget *parent = nullptr) : QMainWindow(parent) {
       setWindowTitle("Bleb Game");
-      setGeometry(100, 100, 300, 200);
-    }
-}
+      int screenWidth = 1920;
+      int screenHeight = 1080;
+      int windowWidth = 1400;
+      int windowHeight = 500;
+      setGeometry((screenWidth - windowWidth) / 2, (screenHeight - windowHeight) / 2, windowWidth, windowHeight);
 
-int main(int argc, char *argv[]) {
+      QWidget* centralWidget = new QWidget();
+      setCentralWidget(centralWidget);
+      QVBoxLayout* layout = new QVBoxLayout(centralWidget);
+
+      // QPushButton* button = new QPushButton("Knopka");
+      // layout->addWidget(button);
+
+      QLabel* labelName = new QLabel("название");
+      labelName->setFrameStyle(QFrame::Panel | QFrame::Sunken);
+      layout->addWidget(labelName);
+
+      QLabel* labelPicture = new QLabel("картинка");
+      labelPicture->setFrameStyle(QFrame::Panel | QFrame::Sunken);
+      layout->addWidget(labelPicture);
+
+      QLabel* labelDesc = new QLabel("название");
+      labelDesc->setFrameStyle(QFrame::Panel | QFrame::Sunken);
+      layout->addWidget(labelDesc);
+
+      DialogOptions* optionWidget = new DialogOptions();
+      layout->addWidget(optionWidget);
+      optionWidget->setButtons();
+    };
+};
+
+int main(int argc, char** argv) {
   QApplication app(argc, argv);
   GameMainWindow window;
   window.show();
   return app.exec();
-}
+};
 
 // int main() {
 //   Choice test("в замке","you go to the castle and see a cow what do you do","go to the castle");
