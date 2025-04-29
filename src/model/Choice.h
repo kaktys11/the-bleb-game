@@ -4,6 +4,7 @@
 #include <iostream>
 #include <string>
 
+
 class Choice {
 private:
   std::string header;
