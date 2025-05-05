@@ -1,5 +1,6 @@
 #include "model/Choice.h"
 #include "model/DialogTree.h"
+#include "view/DialogOptions.h"
 #include <iostream>
 #include <vector>
 #include <QMainWindow>
@@ -9,6 +10,7 @@
 #include <QWidget>
 #include <QLabel>
 #include <QFrame>
+
 
 // #include "raylib.h"
 
@@ -87,21 +89,6 @@
 // int buttonNumber = 3;
 // }
 
-class DialogOptions : public QWidget {
-  public:
-  DialogOptions(QWidget *parent = nullptr) : QWidget(parent) {
-    QVBoxLayout* layoutDialog = new QVBoxLayout(this);
-  };
-
-  void setButtons() { // std::vector<std::string> options
-    QPushButton* buttonA = new QPushButton("option-a");
-    layout()->addWidget(buttonA);
-    QPushButton* buttonB = new QPushButton("option-b");
-    layout()->addWidget(buttonB);
-    QPushButton* buttonC = new QPushButton("option-c");
-    layout()->addWidget(buttonC);
-  }
-};
 
 
 class GameMainWindow : public QMainWindow {
@@ -135,7 +122,11 @@ class GameMainWindow : public QMainWindow {
 
       DialogOptions* optionWidget = new DialogOptions();
       layout->addWidget(optionWidget);
-      optionWidget->setButtons();
+      optionWidget->setButtons({"1", "2"});
+      connect(optionWidget, &DialogOptions::buttonPressed, [this](int buttonInd) {
+        qDebug() << "index is " << buttonInd;
+      });
+      optionWidget->setButtons({"3", "4"});
     };
 };
 
