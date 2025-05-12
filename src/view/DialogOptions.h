@@ -4,14 +4,25 @@
 #include <QWidget>
 #include <QPushButton>
 #include <QLayout>
+#include <QFont>
+#include <QFontDatabase>
 
 class DialogOptions : public QWidget {
   Q_OBJECT
  signals:
   void buttonPressed(int buttonIndex);
+ private:
+  QFont font;
  public:
   DialogOptions(QWidget *parent = nullptr)  : QWidget(parent) {
-  QVBoxLayout* layoutDialog = new QVBoxLayout(this);
+    QFontDatabase fontDatabase;
+    int fontId = fontDatabase.addApplicationFont(":/assets/fonts/advanced_pixel-7.ttf");  // Adjust path to your font file
+    if (fontId == -1) {
+      qDebug() << "font not loaded";
+    }
+    QString fontFamily = fontDatabase.applicationFontFamilies(fontId).at(0);
+    QVBoxLayout* layoutDialog = new QVBoxLayout(this);
+    font = QFont(fontFamily);
 };
 
   void setButtons() { // std::vector<std::string> options
@@ -28,6 +39,29 @@ class DialogOptions : public QWidget {
     for (unsigned i = 0; i < options.size();i++) {
       QPushButton* button = new QPushButton(options[i].c_str());
       layout()->addWidget(button);
+      button->setStyleSheet(R"(
+          QPushButton {
+              background-color: #000000;  /* White background */
+              color: #ffffff;             /* Black text */
+              font-size: 30px;            /* Make the font big enough */
+              border: 3px solid #ffffff;  /* Black border around the button */
+              border-radius: 0px;        /* Rounded corners */
+              padding: 10px 20px;         /* Spacing inside the button */
+              min-width: 150px;           /* Minimum width */
+              min-height: 20px;           /* Minimum height */
+              text-align: left;         /* Center the text */
+          }
+
+          QPushButton:hover {
+              background-color: #FF6F00;  /* Orange-ish color when hovered */
+              border: 3px solid #ffffff;  /* Keep border */
+          }
+
+          QPushButton:pressed {
+              background-color: #FF4500;  /* Darker orange when clicked */
+          }
+      )");
+      button->setFont(font);
       connect(button, &QPushButton::clicked, [this, i]() {
         emit buttonPressed(i);
       });

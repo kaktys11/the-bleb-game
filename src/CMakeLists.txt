@@ -29,8 +29,14 @@ find_package(QT NAMES Qt6 REQUIRED)
 
 find_package(Qt6 COMPONENTS ${QT_MODULES} REQUIRED)
 
+# set(RESOURCES "assets/fonts/VCR_OSD_MONO.ttf")
 
+# add_library(resources ${RESOURCES})
+
+qt_add_resources(RESOURCES resources.qrc)
 
 add_executable(${PROJECT_NAME} ${SOURCES})
 
 target_link_libraries(${PROJECT_NAME} PUBLIC ${QT_PREFIXED_MODULES})
+
+target_sources(${PROJECT_NAME} PRIVATE ${RESOURCES})

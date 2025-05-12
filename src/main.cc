@@ -10,7 +10,8 @@
 #include <QWidget>
 #include <QLabel>
 #include <QFrame>
-
+#include <QFontDatabase>
+#include <QFile>
 
 // #include "raylib.h"
 
@@ -89,11 +90,29 @@
 // int buttonNumber = 3;
 // }
 
+void checkFileExists(const QString &filePath) {
+    if (QFile::exists(filePath)) {
+        qDebug() << "The file exists at" << filePath;
+    } else {
+        qDebug() << "The file does NOT exist at" << filePath;
+    }
+}
 
 
 class GameMainWindow : public QMainWindow {
   public:
     GameMainWindow(QWidget *parent = nullptr) : QMainWindow(parent) {
+      QFontDatabase fontDatabase;
+      int fontId = fontDatabase.addApplicationFont(":/assets/fonts/Inverkrug.otf");  // Adjust path to your font file
+      if (fontId == -1) {
+        qDebug() << "font not loaded";
+      } else {
+        QString fontFamily = fontDatabase.applicationFontFamilies(fontId).at(0);
+
+        // Set font for the application
+        QFont font(fontFamily);
+        setFont(font);
+      }
       setWindowTitle("Bleb Game");
       int screenWidth = 1920;
       int screenHeight = 1080;
@@ -126,7 +145,7 @@ class GameMainWindow : public QMainWindow {
       connect(optionWidget, &DialogOptions::buttonPressed, [this](int buttonInd) {
         qDebug() << "index is " << buttonInd;
       });
-      optionWidget->setButtons({"3", "4"});
+      optionWidget->setButtons({"hi", "направо"});
     };
 };
 
