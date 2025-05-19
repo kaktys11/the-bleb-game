@@ -12,6 +12,7 @@
 #include <QFrame>
 #include <QFontDatabase>
 #include <QFile>
+#include <QTextStream>
 
 // #include "raylib.h"
 
@@ -151,10 +152,44 @@ class GameMainWindow : public QMainWindow {
 
 int main(int argc, char** argv) {
   QApplication app(argc, argv);
+
+
+  int fontId = QFontDatabase::addApplicationFont(":/assets/fonts/advanced_pixel-7.ttf");
+  if (fontId == -1) {
+    qWarning("Failed to load font");
+    return -1;
+  }
+
+  // Get the font family name (e.g., "My Custom Font")
+  QStringList families = QFontDatabase::applicationFontFamilies(fontId);
+  if (families.isEmpty()) {
+    qWarning("Font loaded but no families found");
+    return -1;
+  }
+
+  QString fontFamily = families.at(0);
+  QFile file(":/assets/style.qss"); // Use ":/..." for resources, or just "style.qss" for file on disk
+  if (file.open(QFile::ReadOnly | QFile::Text)) {
+    QTextStream stream(&file);
+    QString stylesheet = stream.readAll();
+
+    stylesheet += QString("\nQWidget { font-family: \"%1\"; }").arg(fontFamily);
+    app.setStyleSheet(stylesheet);
+  } else {
+    qWarning("Could not open stylesheet file.");
+  }
+
+
   GameMainWindow window;
   window.show();
   return app.exec();
 };
+
+
+
+
+
+
 
 // int main() {
 //   Choice test("в замке","you go to the castle and see a cow what do you do","go to the castle");

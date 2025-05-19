@@ -3,5 +3,6 @@
     <file>assets/fonts/VCR_OSD_MONO.ttf</file>
     <file>assets/fonts/Inverkrug.otf</file>
     <file>assets/fonts/advanced_pixel-7.ttf</file>
+    <file>assets/style.qss</file>
   </qresource>
 </RCC>

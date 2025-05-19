@@ -39,28 +39,28 @@ class DialogOptions : public QWidget {
     for (unsigned i = 0; i < options.size();i++) {
       QPushButton* button = new QPushButton(options[i].c_str());
       layout()->addWidget(button);
-      button->setStyleSheet(R"(
-          QPushButton {
-              background-color: #000000;  /* White background */
-              color: #ffffff;             /* Black text */
-              font-size: 30px;            /* Make the font big enough */
-              border: 3px solid #ffffff;  /* Black border around the button */
-              border-radius: 0px;        /* Rounded corners */
-              padding: 10px 20px;         /* Spacing inside the button */
-              min-width: 150px;           /* Minimum width */
-              min-height: 20px;           /* Minimum height */
-              text-align: left;         /* Center the text */
-          }
+      // button->setStyleSheet(R"(
+      //     QPushButton {
+      //         background-color: #000000;  /* White background */
+      //         color: #ffffff;             /* Black text */
+      //         font-size: 30px;            /* Make the font big enough */
+      //         border: 3px solid #ffffff;  /* Black border around the button */
+      //         border-radius: 0px;        /* Rounded corners */
+      //         padding: 10px 20px;         /* Spacing inside the button */
+      //         min-width: 150px;           /* Minimum width */
+      //         min-height: 20px;           /* Minimum height */
+      //         text-align: left;         /* Center the text */
+      //     }
 
-          QPushButton:hover {
-              background-color: #FF6F00;  /* Orange-ish color when hovered */
-              border: 3px solid #ffffff;  /* Keep border */
-          }
+      //     QPushButton:hover {
+      //         background-color: #FF6F00;  /* Orange-ish color when hovered */
+      //         border: 3px solid #ffffff;  /* Keep border */
+      //     }
 
-          QPushButton:pressed {
-              background-color: #FF4500;  /* Darker orange when clicked */
-          }
-      )");
+      //     QPushButton:pressed {
+      //         background-color: #FF4500;  /* Darker orange when clicked */
+      //     }
+      // )");
       button->setFont(font);
       connect(button, &QPushButton::clicked, [this, i]() {
         emit buttonPressed(i);
