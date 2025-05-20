@@ -1,5 +1,6 @@
 #include "model/Choice.h"
 #include "model/DialogTree.h"
+#include "view/DialogOptions.h"
 #include <iostream>
 #include <vector>
 #include <QMainWindow>
@@ -9,6 +10,9 @@
 #include <QWidget>
 #include <QLabel>
 #include <QFrame>
+#include <QFontDatabase>
+#include <QFile>
+#include <QTextStream>
 
 // #include "raylib.h"
 
@@ -87,26 +91,29 @@
 // int buttonNumber = 3;
 // }
 
-class DialogOptions : public QWidget {
-  public:
-  DialogOptions(QWidget *parent = nullptr) : QWidget(parent) {
-    QVBoxLayout* layoutDialog = new QVBoxLayout(this);
-  };
-
-  void setButtons() { // std::vector<std::string> options
-    QPushButton* buttonA = new QPushButton("option-a");
-    layout()->addWidget(buttonA);
-    QPushButton* buttonB = new QPushButton("option-b");
-    layout()->addWidget(buttonB);
-    QPushButton* buttonC = new QPushButton("option-c");
-    layout()->addWidget(buttonC);
-  }
-};
+void checkFileExists(const QString &filePath) {
+    if (QFile::exists(filePath)) {
+        qDebug() << "The file exists at" << filePath;
+    } else {
+        qDebug() << "The file does NOT exist at" << filePath;
+    }
+}
 
 
 class GameMainWindow : public QMainWindow {
   public:
     GameMainWindow(QWidget *parent = nullptr) : QMainWindow(parent) {
+      QFontDatabase fontDatabase;
+      int fontId = fontDatabase.addApplicationFont(":/assets/fonts/Inverkrug.otf");  // Adjust path to your font file
+      if (fontId == -1) {
+        qDebug() << "font not loaded";
+      } else {
+        QString fontFamily = fontDatabase.applicationFontFamilies(fontId).at(0);
+
+        // Set font for the application
+        QFont font(fontFamily);
+        setFont(font);
+      }
       setWindowTitle("Bleb Game");
       int screenWidth = 1920;
       int screenHeight = 1080;
@@ -135,16 +142,54 @@ class GameMainWindow : public QMainWindow {
 
       DialogOptions* optionWidget = new DialogOptions();
       layout->addWidget(optionWidget);
-      optionWidget->setButtons();
+      optionWidget->setButtons({"1", "2"});
+      connect(optionWidget, &DialogOptions::buttonPressed, [this](int buttonInd) {
+        qDebug() << "index is " << buttonInd;
+      });
+      optionWidget->setButtons({"hi", "направо"});
     };
 };
 
 int main(int argc, char** argv) {
   QApplication app(argc, argv);
+
+
+  int fontId = QFontDatabase::addApplicationFont(":/assets/fonts/advanced_pixel-7.ttf");
+  if (fontId == -1) {
+    qWarning("Failed to load font");
+    return -1;
+  }
+
+  // Get the font family name (e.g., "My Custom Font")
+  QStringList families = QFontDatabase::applicationFontFamilies(fontId);
+  if (families.isEmpty()) {
+    qWarning("Font loaded but no families found");
+    return -1;
+  }
+
+  QString fontFamily = families.at(0);
+  QFile file(":/assets/style.qss"); // Use ":/..." for resources, or just "style.qss" for file on disk
+  if (file.open(QFile::ReadOnly | QFile::Text)) {
+    QTextStream stream(&file);
+    QString stylesheet = stream.readAll();
+
+    stylesheet += QString("\nQWidget { font-family: \"%1\"; }").arg(fontFamily);
+    app.setStyleSheet(stylesheet);
+  } else {
+    qWarning("Could not open stylesheet file.");
+  }
+
+
   GameMainWindow window;
   window.show();
   return app.exec();
 };
+
+
+
+
+
+
 
 // int main() {
 //   Choice test("в замке","you go to the castle and see a cow what do you do","go to the castle");
